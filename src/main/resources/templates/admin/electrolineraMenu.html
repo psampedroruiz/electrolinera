@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <td>Id</td>
+                <td>Id Electrolinera</td>
+                <td>Tipo Corriente</td>
+                <td>Potencia</td>
+                <td>Rodaja</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="pc:${puntosCarga}">
+                <td th:text="${pc.id}"></td>
+                <td th:text="${pc.electrolineraId}"></td>
+                <td th:text="${pc.tipoCorriente}"></td>
+                <td th:text="${pc.potencia}"></td>
+                <td th:text="${pc.rodaja}"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

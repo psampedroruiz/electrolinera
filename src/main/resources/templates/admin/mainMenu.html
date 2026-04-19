@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"></head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <td>Nombre</td>
+        <td>Numero Rapidos</td>
+        <td>Numero SRapidos</td>
+        <td>Numero lentos</td>
+        <td>Tipo</td>
+        <td>Geo-localización</td>
+    </tr>
+    </thead>
+    <tbody>
+        <tr th:each="electrolinera: ${electrolineras}" th:data-nombre="${electrolinera.nombre}">
+            <td th:text="${electrolinera.nombre}"></td>
+            <td th:text="${electrolinera.numeroRapidos}"></td>
+            <td th:text="${electrolinera.numeroSemiRapidos}"></td>
+            <td th:text="${electrolinera.numeroLentos}"></td>
+            <td th:text="${electrolinera.tipo}"></td>
+            <td th:text="${electrolinera.geoLocalizacion}"></td>
+            <td><a th:href="|/admin/electrolineraMenu?nombre=${electrolinera.nombre}|">Show</a></td>
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>
