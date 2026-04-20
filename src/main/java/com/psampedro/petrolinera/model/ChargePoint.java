@@ -45,7 +45,7 @@ public class ChargePoint {
         return chargePointType;
     }
 
-    public void setChargePointType(ChargePointType level) {
+    public void setChargePointType(ChargePointType chargePointType) {
         this.chargePointType = chargePointType;
     }
 

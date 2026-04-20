@@ -6,7 +6,7 @@
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-    <table>
+    <table style="width: 100%">>
         <thead>
             <tr>
                 <td>Id</td>
@@ -17,14 +17,72 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each="pc:${puntosCarga}">
+        <th:block th:each="pc:${puntosCarga}" >
+            <tr>
                 <td th:text="${pc.id}"></td>
                 <td th:text="${pc.electrolineraId}"></td>
                 <td th:text="${pc.tipoCorriente}"></td>
                 <td th:text="${pc.potencia}"></td>
                 <td th:text="${pc.rodaja}"></td>
+                <td><button th:onclick="|showModifyBox('pcrow${pc.id}'); return false|">Modify</button></td>
+                <td><button th:onclick="|deleteChargePoint(${pc.id})|">Eliminar</button></td>
             </tr>
+            <tr th:id="|pcrow${pc.id}|" class="modifyBox" hidden>
+                <td></td>
+                <td colspan="5">
+                    <form onsubmit="updatePuntoCarga(this, event)">
+                        <label>Id Punto Carga:</label>
+                        <input name="id" th:value="${pc.id}" disabled>
+                        <label>Id electrolinera:</label>
+                        <input name="electrolineraId" th:value="${pc.electrolineraId}" disabled>
+                        <label>Nivel de carga</label>
+                        <select th:value="${pc.nivel}" name="nivel" style="width: 50px">
+                            <option th:selected="(${cl} == ${pc.nivel})? true: false" th:each="cl:${tiposCarga}" th:value="${cl}" th:text="${cl}"></option>
+                        </select>
+                        <label>Rodaja (mins):</label>
+                        <input type="number" min="0" max="60" th:value="${pc.rodaja}" name="rodaja">
+                        <input type="submit" value="Cambiar Info">
+                    </form>
+                </td>
+            </tr>
+        </th:block>
         </tbody>
     </table>
 </body>
+<script>
+    function showModifyBox(id){
+        let modifyBox = document.getElementById(id)
+        modifyBox.hidden = ! modifyBox.hidden;
+    }
+
+    function updatePuntoCarga(element, event){
+        event.preventDefault();
+        fetch("/admin/updateChargePoint",{
+            method:"PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body:JSON.stringify({id:element.id.value,
+                                level:element.nivel.value,
+                                timeAllocationUnit:element.rodaja.value})
+        }).then(e => alert("Se cambió el punto de carga con éxito")).catch( e => alert("Hubo un problema"))
+            .finally(e =>
+            {
+                window.parent.document
+                    .getElementById("adminIframe")
+                    .contentWindow.location.reload();
+            });
+    }
+
+    function deleteChargePoint(id)
+    {
+        if (!confirm("Estás seguro de querer borrar el PC con Id " + id)) return;
+        fetch("/admin/deleteChargePoint?id="+id,{method:"DELETE"}).finally(e =>
+        {
+            window.parent.document
+                .getElementById("adminIframe")
+                .contentWindow.location.reload();
+        }).catch(e => alert("Hubo un error"));
+    }
+</script>
 </html>

@@ -76,3 +76,7 @@ div.selected{
     border:red;
     background-color: brown;
 }
+
+.modifyBox{
+    margin-left:5%;
+}

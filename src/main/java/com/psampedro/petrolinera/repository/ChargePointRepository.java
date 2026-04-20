@@ -11,6 +11,7 @@ import java.util.Optional;
 
 public interface ChargePointRepository extends JpaRepository<ChargePoint, Integer> {
     @Query( "    SELECT c.id AS id, c.electrolinera.id AS electrolineraId,\n" +
+            "           c.chargePointType.level AS nivel,\n"+
             "           cpt.current AS tipoCorriente, CONCAT(cpt.minPowerSupply,'-',cpt.maxPowerSupply) AS potencia,\n" +
             "           c.timeAllocationUnit AS rodaja\n" +
             "    FROM ChargePoint c \n" +

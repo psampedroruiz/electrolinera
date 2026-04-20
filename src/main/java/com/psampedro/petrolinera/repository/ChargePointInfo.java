@@ -8,6 +8,8 @@ public interface ChargePointInfo {
 
     Integer getElectrolineraId();
 
+    String getNivel();
+
     String getTipoCorriente();
 
     String getPotencia();
