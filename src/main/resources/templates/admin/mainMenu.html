@@ -6,8 +6,11 @@
     <link rel="stylesheet" th:href="@{/css/style.css}"></head>
 <body>
 <table>
+    <h1>Admin menu for Geodesa</h1>
+    <br><br>
     <thead>
     <tr>
+        <h2>Electrolineras en registro</h2>
         <td>Nombre</td>
         <td>Numero Rapidos</td>
         <td>Numero SRapidos</td>
@@ -27,6 +30,7 @@
             <td><a th:href="|/admin/electrolineraMenu?nombre=${electrolinera.nombre}|">Show</a></td>
         </tr>
     </tbody>
+
 </table>
 </body>
 </html>

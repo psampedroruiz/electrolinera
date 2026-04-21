@@ -1,10 +1,12 @@
 package com.psampedro.petrolinera.repository;
 
 import com.psampedro.petrolinera.model.Electrolinera;
+import com.psampedro.petrolinera.projection.ElectrolineraInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ElectrolineraRepository extends JpaRepository<Electrolinera, Integer> {
 
@@ -14,4 +16,7 @@ public interface ElectrolineraRepository extends JpaRepository<Electrolinera, In
             "           e.type AS tipo, e.geoLocation AS geoLocalizacion\n" +
             "    FROM Electrolinera e")
     List<ElectrolineraInfo> getInfoElectrolineras();
+
+    @Query("SELECT e.id FROM Electrolinera e WHERE e.name = :name")
+    Optional<Integer> getIdByName(String name);
 }

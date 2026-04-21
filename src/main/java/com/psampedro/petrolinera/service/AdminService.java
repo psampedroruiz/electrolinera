@@ -1,11 +1,12 @@
 package com.psampedro.petrolinera.service;
 
 import com.psampedro.petrolinera.model.ChargePoint;
-import com.psampedro.petrolinera.model.ChargePointDTO;
+import com.psampedro.petrolinera.dto.ChargePointDTO;
 import com.psampedro.petrolinera.model.ChargePointType;
+import com.psampedro.petrolinera.projection.ChargePointInfo;
+import com.psampedro.petrolinera.projection.ElectrolineraInfo;
 import com.psampedro.petrolinera.repository.*;
 import jakarta.transaction.Transactional;
-import org.apache.catalina.connector.Response;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,22 +41,37 @@ public class AdminService {
     @Transactional
     public Boolean modifyChargePointById(ChargePointDTO cpInfo)
     {
-        System.out.println(cpInfo.getLevel());
         Optional<ChargePoint> result = chargePointRep.findById(cpInfo.getId());
         if (result.isEmpty()) return false;
         ChargePoint record = result.get();
         if (cpInfo.getLevel() != null) {
             Optional<ChargePointType> level = chargePointTypeRepository.findById(cpInfo.getLevel());
             if (level.isEmpty()) return false;
-            System.out.println("FLAG 1");
             record.setChargePointType(level.get());
         }
         if (cpInfo.getTimeAllocationUnit() != null ) record.setTimeAllocationUnit(cpInfo.getTimeAllocationUnit());
         return true;
     }
 
+    public Boolean addChargePoint(ChargePointDTO cpInfo)
+    {
+        if (cpInfo.getElectrolineraId() == null || cpInfo.getLevel() == null || cpInfo.getTimeAllocationUnit() == null) return false;
+        ChargePoint newCP = new ChargePoint();
+        newCP.setChargePointType(chargePointTypeRepository.findById(cpInfo.getLevel()).orElse(null));
+        newCP.setElectrolinera(electrolineraRep.findById(cpInfo.getElectrolineraId()).orElse(null));
+        newCP.setTimeAllocationUnit(cpInfo.getTimeAllocationUnit());
+        chargePointRep.saveAndFlush(newCP);
+        return true;
+    }
+
     public void deleteChargePointById(Integer id)
     {
         chargePointRep.deleteById(id);
+    }
+
+    public Integer getElectrolineraIdByName(String name)
+    {
+        Optional<Integer> id = electrolineraRep.getIdByName(name);
+        return id.orElse(-1);
     }
 }

@@ -1,4 +1,4 @@
-package com.psampedro.petrolinera.repository;
+package com.psampedro.petrolinera.projection;
 
 import com.psampedro.petrolinera.model.Electrolinera;
 

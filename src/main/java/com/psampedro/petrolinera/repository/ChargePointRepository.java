@@ -1,13 +1,12 @@
 package com.psampedro.petrolinera.repository;
 
 import com.psampedro.petrolinera.model.ChargePoint;
-import com.psampedro.petrolinera.model.Electrolinera;
+import com.psampedro.petrolinera.projection.ChargePointInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface ChargePointRepository extends JpaRepository<ChargePoint, Integer> {
     @Query( "    SELECT c.id AS id, c.electrolinera.id AS electrolineraId,\n" +

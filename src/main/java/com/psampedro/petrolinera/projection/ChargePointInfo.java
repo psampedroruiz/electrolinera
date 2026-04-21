@@ -1,4 +1,4 @@
-package com.psampedro.petrolinera.repository;
+package com.psampedro.petrolinera.projection;
 
 /**
  * Projection for {@link com.psampedro.petrolinera.model.ChargePoint}

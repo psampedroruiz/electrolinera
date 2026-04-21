@@ -30,6 +30,8 @@ class AdminController {
     {
         model.addAttribute("puntosCarga",adminServ.getInfoElectrolinera(name));
         model.addAttribute("tiposCarga",adminServ.getAllChargerLevels());
+        model.addAttribute("idElectrolinera",adminServ.getElectrolineraIdByName(name));
+        model.addAttribute("electrolineraName",name);
         System.out.println(adminServ.getAllChargerLevels());
         return "admin/electrolineraMenu";
     }
